@@ -8,7 +8,20 @@
 
     <body>
         <script>
-            console.log("Hello World")
+            let result;
+            let choice;
+            function getComputerChoice() {
+                return Math.random()
+            }
+            choice = getComputerChoice()
+            if (choice > 0 && choice <= .4) {
+                result = "Rock";
+            } else if (choice > .4 && choice <= .7 ) {
+                result = "Paper";
+            } else {
+                result = "Scissors";
+            }
+            console.log(result)
         </script>
     </body>
 </html>
