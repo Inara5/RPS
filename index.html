@@ -3,11 +3,33 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title></title>
+        <title>Rock, Paper, Scissors Game</title>
     </head>
-
     <body>
+        <div>
+            <h1>Rock, Paper, Scissors !</h1>
+            <h3>What will your selection be ?</h3>
+            <button id="rock">Rock</button>
+            <button id="paper">Paper</button>
+            <button id="scissors">Scissors</button>
+            <p id="score"></p>
+            <button id="reset">Reset</button>
+        </div>
+
         <script>
+            let rock = document.getElementById("rock");
+            let paper = document.getElementById("paper");
+            let scissors = document.getElementById("scissors");
+            let h3 = document.querySelector("h3");
+            let score = document.querySelector("#score")
+            let div = document.querySelector("div")
+            let buttons = document.querySelectorAll("button")
+            let reset = document.getElementById("reset")
+            reset.style.display = "none"
+            let p = document.createElement("p")
+            p.textContent = ""
+            div.insertBefore(p, div.children[2])
+
             let result;
 
             function getRandomNumber() {
@@ -26,81 +48,86 @@
                 return result;
             }
 
-            function getHumanChoice() {
-                let answer = prompt("What will it be ?");
-                return answer.charAt(0).toUpperCase() + answer.slice(1).toLowerCase();
-            }            
+            rock.addEventListener("click", playRound)
+            paper.addEventListener("click", playRound)
+            scissors.addEventListener("click", playRound)
+            reset.addEventListener("click", () => {
+                buttons.forEach(button => button.style.display = "inline")
+                h3.textContent = "What will your selection be ?"
+                p.textContent = ""
+                score.textContent = ""
+                humanScore = 0
+                computerScore = 0
+                reset.style.display = "none"
+            })
 
-            function playGame() {
-                let humanScore = 0;
-                let computerScore = 0;
-                let humanSelection = getHumanChoice();
+            let humanScore = 0;
+            let computerScore = 0;
+
+            function playRound(e) {
                 let computerSelection = getComputerChoice();
-                function playRound(humanChoice, computerChoice) {
-                if (humanChoice == "Rock" && computerChoice == "Paper") {
+
+                if (e.target.id == "rock" && computerSelection == "Paper") {
                     console.log("Sorry ! Paper beats rock !");
+                    h3.textContent = "Sorry ! Paper beats rock !"
+                    p.textContent = "Computer chose: Paper"                    
                     computerScore++;
-                } else if (humanChoice == "Paper" && computerChoice == "Rock") {
+
+                    score.textContent = `Your score: ${humanScore} | Computer score: ${computerScore}`
+                } else if (e.target.id == "paper" && computerSelection == "Rock") {
                     console.log("Nice ! Paper beats rock !");
+                    h3.textContent = "Nice ! Paper beats rock !";
+                    p.textContent = "Computer chose: Rock";
                     humanScore++;
-                } else if (humanChoice == "Scissors" && computerChoice == "Rock") {
+
+                    score.textContent = `Your score: ${humanScore} | Computer score: ${computerScore}`
+                } else if (e.target.id == "scissors" && computerSelection == "Rock") {
                     console.log("Sorry ! Rock beats scissors !")
+                    h3.textContent = "Sorry ! Rock beats scissors !"
+                    p.textContent = "Computer chose: Rock"
                     computerScore++;
-                } else if (humanChoice == "Rock" && computerChoice == "Scissors") {
+
+                    score.textContent = `Your score: ${humanScore} | Computer score: ${computerScore}`
+                } else if (e.target.id == "rock" && computerSelection == "Scissors") {
                     console.log("Nice ! Rock beats scissors !")
+                    h3.textContent = "Nice ! Rock beats scissors !"
+                    p.textContent = "Computer chose: Scissors"
                     humanScore++;
-                } else if (humanChoice == "Paper" && computerChoice == "Scissors") {
+
+                    score.textContent = `Your score: ${humanScore} | Computer score: ${computerScore}`
+                } else if (e.target.id == "paper" && computerSelection == "Scissors") {
                     console.log("Sorry ! Scissors beats paper !");
+                    h3.textContent = "Sorry ! Scissors beats paper !"
+                    p.textContent = "Computer chose: Scissors"
                     computerScore++;
-                } else if (humanChoice == "Scissors" && computerChoice == "Paper") {
+
+                    score.textContent = `Your score: ${humanScore} | Computer score: ${computerScore}`
+                } else if (e.target.id == "scissors" && computerSelection == "Paper") {
                     console.log("Nice ! Scissors beats paper !")
+                    h3.textContent = "Nice ! Scissors beats paper !"
+                    p.textContent = "Computer chose: Paper"
                     humanScore++;
-                } else if (humanChoice == "Rock" && computerChoice == "Rock" || humanChoice == "Paper" && computerChoice == "Paper" || humanChoice == "Scissors" && computerChoice == "Scissors") {
+
+                    score.textContent = `Your score: ${humanScore} | Computer score: ${computerScore}`
+                } else if (e.target.id == "rock" && computerSelection == "Rock" || e.target.id == "paper" && computerSelection == "Paper" || e.target.id == "scissors" && computerSelection == "Scissors") {
                     console.log("It's a tie !")
+                    h3.textContent = "It's a tie !"
+                    p.textContent = `Computer chose: ${computerSelection}`
+                    score.textContent = `Your score: ${humanScore} | Computer score: ${computerScore}`
                 } else {
                     console.log("Does not compute")
                 }
-                };
-            
-                playRound(humanSelection, computerSelection);
-                console.log(computerSelection);
-                console.log(humanSelection);
-                console.log(computerScore);
-                console.log(humanScore);
-                humanSelection = getHumanChoice();
-                computerSelection = getComputerChoice();
-                playRound(humanSelection, computerSelection);
-                console.log(computerSelection);
-                console.log(humanSelection);
-                console.log(computerScore);
-                console.log(humanScore);
-                humanSelection = getHumanChoice();
-                computerSelection = getComputerChoice();
-                playRound(humanSelection, computerSelection);
-                console.log(computerSelection);
-                console.log(humanSelection);
-                console.log(computerScore);
-                console.log(humanScore);
-                humanSelection = getHumanChoice();
-                computerSelection = getComputerChoice();
-                playRound(humanSelection, computerSelection);
-                console.log(computerSelection);
-                console.log(humanSelection);
-                console.log(computerScore);
-                console.log(humanScore);
-                humanSelection = getHumanChoice();
-                computerSelection = getComputerChoice();
-                playRound(humanSelection, computerSelection);
-                if (humanScore > computerScore) {
-                    console.log("You win ! Congratulations !")
-                } else if (humanScore < computerScore){
-                    console.log("You lose. Better luck next time !")
-                } else {
-                    console.log("It's a tie ! How'd that happen ?")
-                }
-            }
 
-            playGame()
+                if (humanScore > computerScore && humanScore + computerScore == 5) {
+                    h3.textContent = "You Win !"
+                    buttons.forEach( button => button.style.display = "none")
+                    reset.style.display = "block"
+                } else if (humanScore < computerScore && humanScore + computerScore == 5) {
+                    h3.textContent = "You Lose :("
+                    buttons.forEach( button => button.style.display = "none")
+                    reset.style.display = "block"
+                }
+                };
         </script>
     </body>
 </html>
